@@ -3,6 +3,7 @@ using HenryMod.Survivors.Henry;
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
+using EntityStates.Mage.Weapon;
 
 namespace HenryMod.Survivors.Henry.SkillStates
 {
@@ -20,7 +21,7 @@ namespace HenryMod.Survivors.Henry.SkillStates
             //base.effectPrefab = Modules.Assets.SomeMuzzleEffect;
             //targetmuzzle = "muzzleThrow"
 
-            attackSoundString = "HenryBombThrow";
+            attackSoundString = "Play_commando_M2_grenade_throw";
 
             baseDuration = BaseDuration;
             baseDelayBeforeFiringProjectile = BaseDelayDuration;
@@ -60,7 +61,8 @@ namespace HenryMod.Survivors.Henry.SkillStates
 
             if (GetModelAnimator())
             {
-                PlayAnimation("Gesture, Override", "ThrowBomb", "ThrowBomb.playbackRate", this.duration);
+                base.PlayAnimation("Gesture Left, Additive", FireFireBolt.FireGauntletLeftStateHash, FireFireBolt.FireGauntletParamHash, this.duration);
+                base.PlayAnimation("Gesture, Additive", FireFireBolt.HoldGauntletsUpStateHash, FireFireBolt.FireGauntletParamHash, this.duration);
             }
         }
     }

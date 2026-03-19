@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fileDateTimeTicks: 639057154800000000
-  _serializedTypeResultCache: []
+  _serializedTypeResultCache:
+  - cacheKey:
+      requiredType:
+        assemblyQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      entriesIncludeComponentFoundInChildren: 0
+    cacheHit:
+      pathCache: []
+      guidsCache: []

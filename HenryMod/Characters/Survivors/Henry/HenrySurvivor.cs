@@ -8,10 +8,11 @@ using RoR2.Skills;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace HenryMod.Survivors.Henry
 {
-    public class HenrySurvivor : SurvivorBase<HenrySurvivor>
+    public class HenrySurvivor : SurvivorBase<HenrySurvivor> 
     {
         //used to load the assetbundle for this character. must be unique
         public override string assetBundleName => "coolbundle"; //if you do not change this, you are giving permission to deprecate the mod
@@ -42,6 +43,7 @@ namespace HenryMod.Survivors.Henry
             sortPosition = 100,
 
             crosshair = Asset.LoadCrosshair("Standard"),
+            //crosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Mage/MageCrosshair.prefab").WaitForCompletion(),
             podPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"),
 
             maxHealth = 110f,
@@ -53,24 +55,15 @@ namespace HenryMod.Survivors.Henry
 
         public override CustomRendererInfo[] customRendererInfos => new CustomRendererInfo[]
         {
-                new CustomRendererInfo
-                {
-                    childName = "SwordModel",
-                    material = assetBundle.LoadMaterial("matHenry"),
-                },
-                new CustomRendererInfo
-                {
-                    childName = "GunModel",
-                },
-                new CustomRendererInfo
+               new CustomRendererInfo
                 {
                     childName = "Model",
-                }
+                },
         };
 
         public override UnlockableDef characterUnlockableDef => HenryUnlockables.characterUnlockableDef;
         
-        public override ItemDisplaysBase itemDisplays => new HenryItemDisplays();
+        public override ItemDisplaysBase itemDisplays => null;
 
         //set in base classes
         public override AssetBundle assetBundle { get; protected set; }
@@ -119,7 +112,9 @@ namespace HenryMod.Survivors.Henry
         private void AdditionalBodySetup()
         {
             AddHitboxes();
-            bodyPrefab.AddComponent<HenryWeaponComponent>();
+            //bodyPrefab.AddComponent<HenryWeaponComponent>();
+            bodyPrefab.AddComponent<AnimReplace>();
+            displayPrefab.AddComponent<AnimReplaceDisplay>();
             //bodyPrefab.AddComponent<HuntressTrackerComopnent>();
             //anything else here
         }
@@ -137,12 +132,15 @@ namespace HenryMod.Survivors.Henry
             Prefabs.ClearEntityStateMachines(bodyPrefab);
 
             //the main "Body" state machine has some special properties
-            Prefabs.AddMainEntityStateMachine(bodyPrefab, "Body", typeof(EntityStates.GenericCharacterMain), typeof(EntityStates.SpawnTeleporterState));
+            //Prefabs.AddMainEntityStateMachine(bodyPrefab, "Body", typeof(EntityStates.GenericCharacterMain), typeof(EntityStates.SpawnTeleporterState));
+            Prefabs.AddMainEntityStateMachine(bodyPrefab, "Body", typeof(EntityStates.Mage.MageCharacterMain), typeof(EntityStates.SpawnTeleporterState));
             //if you set up a custom main characterstate, set it up here
-                //don't forget to register custom entitystates in your HenryStates.cs
+            //don't forget to register custom entitystates in your HenryStates.cs
 
             Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon");
             Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon2");
+            Prefabs.AddEntityStateMachine(bodyPrefab, "Backpack");
+            Prefabs.AddEntityStateMachine(bodyPrefab, "Jet");
         }
 
         #region skills
@@ -218,19 +216,51 @@ namespace HenryMod.Survivors.Henry
 
             //the primary skill is created using a constructor for a typical primary
             //it is also a SteppedSkillDef. Custom Skilldefs are very useful for custom behaviors related to casting a skill. see ror2's different skilldefs for reference
-            SteppedSkillDef primarySkillDef1 = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo
-                (
-                    "HenrySlash",
-                    HENRY_PREFIX + "PRIMARY_SLASH_NAME",
-                    HENRY_PREFIX + "PRIMARY_SLASH_DESCRIPTION",
-                    assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
-                    new EntityStates.SerializableEntityStateType(typeof(SkillStates.SlashCombo)),
-                    "Weapon",
-                    true
-                ));
+            //SteppedSkillDef primarySkillDef1 = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo
+            //    (
+            //        "HenrySlash",
+            //        HENRY_PREFIX + "PRIMARY_SLASH_NAME",
+            //        HENRY_PREFIX + "PRIMARY_SLASH_DESCRIPTION",
+            //        assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
+            //        new EntityStates.SerializableEntityStateType(typeof(SkillStates.Missile)),
+            //        "Weapon",
+            //        true
+            //    ));
             //custom Skilldefs can have additional fields that you can set manually
-            primarySkillDef1.stepCount = 2;
-            primarySkillDef1.stepGraceDuration = 0.5f;
+            //primarySkillDef1.stepCount = 2;
+            //primarySkillDef1.stepGraceDuration = 0.5f;
+
+            SkillDef primarySkillDef1 = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo
+            {
+                skillName = "WitchMissile",
+                skillNameToken = HENRY_PREFIX + "SECONDARY_GUN_NAME",
+                skillDescriptionToken = HENRY_PREFIX + "SECONDARY_GUN_DESCRIPTION",
+                keywordTokens = new string[] { "KEYWORD_AGILE" },
+                skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Missile)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 1f,
+                baseMaxStock = 3,
+
+                rechargeStock = 3,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = true,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+
+            });
 
             Skills.AddPrimarySkills(bodyPrefab, primarySkillDef1);
         }
@@ -287,7 +317,7 @@ namespace HenryMod.Survivors.Henry
                 skillDescriptionToken = HENRY_PREFIX + "UTILITY_ROLL_DESCRIPTION",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(Roll)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Dash)),
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
@@ -325,15 +355,35 @@ namespace HenryMod.Survivors.Henry
                 skillDescriptionToken = HENRY_PREFIX + "SPECIAL_BOMB_DESCRIPTION",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSpecialIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.ThrowBomb)),
+                //activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Mage.Weapon.ChargeIcebomb)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ChargeNuke)),
                 //setting this to the "weapon2" EntityStateMachine allows us to cast this skill at the same time primary, which is set to the "weapon" EntityStateMachine
-                activationStateMachineName = "Weapon2", interruptPriority = EntityStates.InterruptPriority.Skill,
+                activationStateMachineName = "Weapon", 
+                interruptPriority = EntityStates.InterruptPriority.Skill,
 
+                baseRechargeInterval = 4f,
                 baseMaxStock = 1,
-                baseRechargeInterval = 10f,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = true,
 
                 isCombatSkill = true,
-                mustKeyPress = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+
+                //baseMaxStock = 1,
+                //baseRechargeInterval = 10f,
+
+                //isCombatSkill = true,
+                //mustKeyPress = true,
             });
 
             Skills.AddSpecialSkills(bodyPrefab, specialSkillDef1);
@@ -430,7 +480,19 @@ namespace HenryMod.Survivors.Henry
         private void AddHooks()
         {
             R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+            //On.RoR2.GlobalEventManager.OnHitAllProcess += GlobalEventManager_OnHitAllProcess;
         }
+         
+        //private void GlobalEventManager_OnHitAllProcess(On.RoR2.GlobalEventManager.orig_OnHitAllProcess orig, GlobalEventManager self, DamageInfo damageInfo, GameObject hitObject)
+        //{
+        //    Transform rootObject = hitObject.transform.root;
+        //    bool flag = rootObject.name.Contains("Gas");
+
+        //    if (flag)
+        //    { 
+        //        Log.Message(rootObject.name);
+        //    }
+        //}
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {

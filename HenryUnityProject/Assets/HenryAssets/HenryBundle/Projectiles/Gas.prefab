@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 155824727581260972}
   - component: {fileID: 155824727581260963}
   - component: {fileID: 155824727581260962}
-  m_Layer: 0
+  - component: {fileID: 1254450305855339661}
+  m_Layer: 14
   m_Name: Gas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,6 +37,7 @@ Transform:
   m_Children:
   - {fileID: 155824728651699493}
   - {fileID: 155824728979488134}
+  - {fileID: 4910763457492078739}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -127,7 +129,7 @@ MonoBehaviour:
   allowPrediction: 0
   owner: {fileID: 0}
   localCollisionHappened: 0
-  procCoefficient: 1
+  procCoefficient: 0
   combo: 0
   CheckChildrenForCollidersAndIncludeDisabled: 0
 --- !u!114 &155824727581260963
@@ -148,7 +150,7 @@ MonoBehaviour:
   forceVector: {x: 0, y: 0, z: 0}
   overlapProcCoefficient: 1
   fireFrequency: 1
-  resetFrequency: 20
+  resetFrequency: 60
   lifetime: 10
   onBegin:
     m_PersistentCalls:
@@ -177,9 +179,25 @@ MonoBehaviour:
   damageType:
     damageType: 4096
     damageTypeExtended: 0
-    damageSource: 0
+    damageSource: 32
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
+--- !u!54 &1254450305855339661
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155824727581260961}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &155824728651699492
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +240,7 @@ ParticleSystem:
   m_GameObject: {fileID: 155824728651699492}
   serializedVersion: 8
   lengthInSec: 5
-  simulationSpeed: 1
+  simulationSpeed: 2
   stopAction: 0
   cullingMode: 3
   ringBufferMode: 0
@@ -5014,7 +5032,7 @@ GameObject:
   m_Component:
   - component: {fileID: 155824728979488134}
   - component: {fileID: 155824728979488135}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5029,8 +5047,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155824728979488133}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.57, z: 0}
-  m_LocalScale: {x: 10, y: 7, z: 10}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 14, y: 12, z: 14}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 155824727581260968}
@@ -5049,3 +5067,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showAsSphere: 0
+--- !u!1 &3385489770518765264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4910763457492078739}
+  - component: {fileID: 5776124174507681118}
+  m_Layer: 12
+  m_Name: HurtBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4910763457492078739
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3385489770518765264}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 155824727581260968}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5776124174507681118
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3385489770518765264}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 14, y: 12, z: 14}
+  m_Center: {x: 0, y: 0, z: 0}
