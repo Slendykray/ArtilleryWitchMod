@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7464496111741151503}
   - component: {fileID: 1409458252296698111}
   - component: {fileID: 8428086608480566399}
-  - component: {fileID: 5043364394937872884}
+  - component: {fileID: 3059482994471248016}
   m_Layer: 14
   m_Name: Nuke
   m_TagString: Untagged
@@ -56,7 +56,7 @@ MonoBehaviour:
   spawnEffect: {fileID: 0}
   lifetime: 10
   lifetimeExpiredEffect: {fileID: 0}
-  desiredForwardSpeed: 90
+  desiredForwardSpeed: 100
   updateAfterFiring: 0
   enableVelocityOverLifetime: 0
   velocityOverLifetime:
@@ -278,7 +278,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.27, y: 1.27, z: 4.9285526}
   m_Center: {x: 0, y: 0, z: -0.10176289}
---- !u!114 &5043364394937872884
+--- !u!114 &3059482994471248016
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

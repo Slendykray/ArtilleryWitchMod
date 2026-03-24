@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7383481473432671010}
   - component: {fileID: 174662965163759377}
   m_Layer: 0
-  m_Name: HenryMonsterMaster
+  m_Name: ArtilleristMonsterMaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

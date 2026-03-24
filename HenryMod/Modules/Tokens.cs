@@ -2,7 +2,9 @@
 {
     internal static class Tokens
     {
-        public const string agilePrefix = "<style=cIsUtility>Agile.</style>";
+        public const string agilePrefix = "<style=cIsUtility>Agile.</style> ";
+        public const string stunningPrefix = "<style=cIsDamage>Stunning.</style> ";
+        public const string poisonousPrefix = "<style=cIsHealing>Poisonous.</style> ";
 
         public static string DamageText(string text)
         {
@@ -12,6 +14,15 @@
         {
             return $"<style=cIsDamage>{value * 100}% damage</style>";
         }
+        public static string MultDamageValueText(float value, float value2)
+        {
+            return $"<style=cIsDamage>{value}x{value2 * 100}% damage</style>";
+        }
+        public static string RangeDamageValueText(float value, float value2)
+        {
+            return $"<style=cIsDamage>{value * 100}-{value2 * 100}% damage</style>";
+        }
+
         public static string UtilityText(string text)
         {
             return $"<style=cIsUtility>{text}</style>";

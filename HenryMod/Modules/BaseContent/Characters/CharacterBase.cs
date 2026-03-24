@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace HenryMod.Modules.Characters
 {
@@ -45,6 +46,8 @@ namespace HenryMod.Modules.Characters
         protected virtual void InitializeCharacterBodyPrefab()
         {
             characterModelObject = Prefabs.LoadCharacterModel(assetBundle, modelPrefabName);
+            //gg 
+            characterModelObject.GetComponent<Animator>().runtimeAnimatorController = Addressables.LoadAssetAsync<RuntimeAnimatorController>("RoR2/Base/Mage/animMage.controller").WaitForCompletion();
 
             bodyPrefab = Modules.Prefabs.CreateBodyPrefab(characterModelObject, bodyInfo);
             prefabCharacterBody = bodyPrefab.GetComponent<CharacterBody>();

@@ -15,7 +15,7 @@ namespace HenryMod.Survivors.Henry.SkillStates
 {
     public class Wait : BaseSkillState
     {
-        public static float duration = 3f;
+        public static float duration = HenryStaticValues.nukeWaitTime;
         public override void OnEnter()
         {      
             skillLocator.primary.SetSkillOverride(base.characterBody, CharacterBody.CommonAssets.disabledSkill, GenericSkill.SkillOverridePriority.Contextual);

@@ -29,6 +29,8 @@ namespace HenryMod.Survivors.Henry
         public static GameObject chargeNuke;
         public static GameObject nuke;
         public static GameObject fireDot;
+        public static GameObject cluster;
+        public static GameObject napalm;
 
         public static void Init(AssetBundle assetBundle)
         {
@@ -83,7 +85,8 @@ namespace HenryMod.Survivors.Henry
 
         private static void CreateBombProjectile()
         {
-            bombProjectilePrefab = Asset.CloneProjectilePrefab("CommandoGrenadeProjectile", "HenryBombProjectile");
+
+            bombProjectilePrefab = Asset.CloneProjectilePrefab("CommandoGrenadeProjectile", "ArtilleristGasGrenade");
 
             ProjectileImpactExplosion bombImpactExplosion = bombProjectilePrefab.GetComponent<ProjectileImpactExplosion>();       
             bombImpactExplosion.blastDamageCoefficient = 0f;
@@ -93,10 +96,6 @@ namespace HenryMod.Survivors.Henry
             bombImpactExplosion.fireChildren = true;  
             bombImpactExplosion.childrenCount = 1;
             bombImpactExplosion.childrenProjectilePrefab = _assetBundle.LoadAsset<GameObject>("gas");
-
-            //ProjectileDamage bombDamage = bombProjectilePrefab.GetComponent<ProjectileDamage>();
-            //bombDamage.damageType = DamageType.Stun1s;
-
 
             GameObject gas = _assetBundle.LoadAsset<GameObject>("gas");
 
@@ -108,95 +107,74 @@ namespace HenryMod.Survivors.Henry
             gas.transform.Find("Smoke").GetComponent<ParticleSystem>().GetComponent<ParticleSystemRenderer>().material =
                 Addressables.LoadAssetAsync<Material>("RoR2/Base/MiniMushroom/matSporeGrenadeGasCloud.mat").WaitForCompletion();
 
-          
-
-
-            fireEffect = Asset.CloneProjectilePrefab("CommandoGrenadeProjectile", "HenryFBombProjectile");
+      
+            fireEffect = Asset.CloneProjectilePrefab("CommandoGrenadeProjectile", "ArtilleristGasExplosion");
             ProjectileImpactExplosion fireExplosion = fireEffect.GetComponent<ProjectileImpactExplosion>();
-            fireExplosion.lifetime = 0f;
+            fireExplosion.lifetime = 0f; 
             fireExplosion.dotIndex = DotController.DotIndex.Burn;
             fireExplosion.dotDuration = 5f;
             fireExplosion.applyDot = true;
             fireExplosion.blastRadius = 16f;
             fireExplosion.blastImpactEffect = GlobalEventManager.CommonAssets.igniteOnKillExplosionEffectPrefab;
             fireExplosion.bonusBlastForce = Vector3.zero;
+            fireExplosion.falloffModel = BlastAttack.FalloffModel.None;
 
 
-            missileProjectilePrefab = Asset.CloneProjectilePrefab("MageFireboltBasic", "WitchMissileProjectile");
+            //missile
+            missileProjectilePrefab = Asset.CloneProjectilePrefab("MageFireboltBasic", "ArtilleristMissileProjectile");
             ProjectileImpactExplosion missileImpactExplosion = missileProjectilePrefab.GetComponent<ProjectileImpactExplosion>();
             missileImpactExplosion.blastRadius = 8f;
             missileImpactExplosion.bonusBlastForce = Vector3.zero;
             ProjectileDamage damage = missileProjectilePrefab.GetComponent<ProjectileDamage>();
             damage.damageType = DamageType.Generic;
 
-             
 
-            GameObject missileGhost = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/MissileGhost.prefab").WaitForCompletion();
 
-            GameObject missileModel = R2API.PrefabAPI.InstantiateClone(missileGhost.transform.Find("missile VFX").gameObject, "missileModel");
-            missileModel.transform.localScale *= 10f;
 
+            //nuke
             chargeNuke = _assetBundle.LoadAsset<GameObject>("ChargeNuke");
-            GameObject chargeNukeGhost = R2API.PrefabAPI.InstantiateClone(missileModel, "chargeNukeGhost");
-            //chargeNukeGhost.transform.SetParent(chargeNuke.transform, false);
-             
-
-          
-            GameObject nukeGhost = R2API.PrefabAPI.InstantiateClone(missileGhost, "nukeGhost");
-            nukeGhost.transform.localScale *= 10f;
-
+            
             nuke = _assetBundle.LoadAsset<GameObject>("Nuke");
-
-            //nuke = Asset.CloneProjectilePrefab("CommandoGrenadeProjectile", "nuke");
-
-            ProjectileController nukeController = nuke.GetComponent<ProjectileController>();
-            //nukeController.ghostPrefab = nukeGhost;
 
             ProjectileImpactExplosion nukeImpactExplosion = nuke.GetComponent<ProjectileImpactExplosion>();
             nukeImpactExplosion.explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion(); 
-            //nukeImpactExplosion.explosionEffect = bombExplosionEffect;
-            //nukeImpactExplosion.explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/OmniExplosionVFXQuick.prefab").WaitForCompletion();
-            //GameObject nukeImpact = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/OmniExplosionVFXQuick.prefab").WaitForCompletion(), "nukeImpact");
-            //nukeImpact.GetComponent<EffectComponent>().soundName = "Play_mage_m2_iceSpear_impact";
-            //nukeImpactExplosion.explosionEffect = nukeImpact;
-            //nukeImpactExplosion.lifetimeExpiredSound = Content.CreateAndAddNetworkSoundEventDef("HenryBombExplosion");
 
-            fireDot = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Molotov/MolotovProjectileDotZone.prefab").WaitForCompletion(), "fireNuke");
+            fireDot = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Molotov/MolotovProjectileDotZone.prefab").WaitForCompletion(), "ArtilleristFireNuke");
             fireDot.transform.localScale *= 3f;
-            //nukeImpactExplosion.childrenProjectilePrefab = fireDot;
 
 
+            //cluster
+            GameObject clusterBomblet = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/CryoCanisterBombletsProjectile.prefab").WaitForCompletion(), "ArtilleristClusterBomblet");
+            clusterBomblet.GetComponent<ProjectileSimple>().desiredForwardSpeed = 15f;
+            clusterBomblet.GetComponent<ProjectileImpactExplosion>().blastRadius = 9f;
 
-            //nukeImpactExplosion.destroyOnEnemy = true;
-            //nukeImpactExplosion.lifetimeAfterImpact = 0f;
-            //nukeImpactExplosion.lifetime = 0f; 
-            //nukeImpactExplosion.dotIndex = DotController.DotIndex.Burn;
-            //nukeImpactExplosion.dotDuration = 5f;
-            //nukeImpactExplosion.applyDot = true;
-            //nukeImpactExplosion.blastRadius = 16f;
-            //nukeImpactExplosion.blastImpactEffect = GlobalEventManager.CommonAssets.igniteOnKillExplosionEffectPrefab;
-            //nukeImpactExplosion.bonusBlastForce = Vector3.zero;
+            cluster = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/CryoCanisterProjectile.prefab").WaitForCompletion(), "ArtilleristCluster");
+            ProjectileImpactExplosion clusterExplosion = cluster.GetComponent<ProjectileImpactExplosion>();
+            clusterExplosion.childrenDamageCoefficient = 1f;
+            clusterExplosion.childrenCount = HenryStaticValues.clusterBomblets;
+            clusterExplosion.destroyOnWorld = false;
+            clusterExplosion.timerAfterImpact = true;
+            clusterExplosion.lifetimeAfterImpact = 0.1f;
+      
 
+            clusterExplosion.childrenProjectilePrefab = clusterBomblet;
+            clusterExplosion.rangeRollDegrees = 360f;
 
-            //bombImpactExplosion.fireChildren = true;
-            //bombImpactExplosion.childrenCount = 1;
-            //bombImpactExplosion.childrenProjectilePrefab = _assetBundle.LoadAsset<GameObject>("gas");
-
-
-
-            //nukeGhost.transform.SetParent(nuke.transform, false);
-
-            //nuke.GetComponent<>
-            //nuke = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Mage/MageLightningBombProjectile.prefab").WaitForCompletion(), "nuke");
-
-            //GameObject nukeGhost = R2API.PrefabAPI.InstantiateClone(nukeGhost, "nukeGhost");
+            ProjectileController clusterController = cluster.GetComponent<ProjectileController>();
+            clusterController.ghostPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/CommandoGrenadeGhost.prefab").WaitForCompletion();
 
 
+            //napalm
 
-
-
-
-
+            napalm = R2API.PrefabAPI.InstantiateClone(fireEffect, "ArtilleristNapalm");
+            ProjectileImpactExplosion napalmExplosion = napalm.GetComponent<ProjectileImpactExplosion>();        
+            napalmExplosion.fireChildren = true;
+            napalmExplosion.childrenCount = 1;  
+            GameObject napalmDot = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Molotov/MolotovProjectileDotZone.prefab").WaitForCompletion(), "ArtilleristNapalmDot");
+            napalmDot.transform.localScale *= 2f;
+            napalmExplosion.childrenProjectilePrefab = napalmDot;
+            napalmExplosion.transformSpace = ProjectileImpactExplosion.TransformSpace.Normal;
+            napalmExplosion.falloffModel = BlastAttack.FalloffModel.None;
         }
         #endregion projectiles
     }

@@ -14,7 +14,7 @@ namespace HenryMod.Survivors.Henry.Components
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.transform.name.Contains("WitchMissile") || other.transform.name.Contains("Nuke"))
+            if (other.transform.name.Contains("ArtilleristMissileProjectile") || other.transform.name.Contains("Nuke"))
             {
                 ProjectileController pc = other.GetComponent<ProjectileController>();
                 FuckingExplode(pc.owner, transform.position);

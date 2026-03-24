@@ -148,9 +148,9 @@ MonoBehaviour:
   attackerFiltering: 2
   impactEffect: {fileID: 0}
   forceVector: {x: 0, y: 0, z: 0}
-  overlapProcCoefficient: 1
+  overlapProcCoefficient: 0.5
   fireFrequency: 1
-  resetFrequency: 60
+  resetFrequency: 3
   lifetime: 10
   onBegin:
     m_PersistentCalls:

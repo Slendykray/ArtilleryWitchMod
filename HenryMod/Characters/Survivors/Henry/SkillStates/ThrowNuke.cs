@@ -21,8 +21,8 @@ namespace HenryMod.Survivors.Henry.SkillStates
             float num = HenryStaticValues.nukeMaxRadius * charge;
             nukeImpactExplosion.blastRadius = num;
 
-            Chat.AddMessage("" + charge);
-
+            //Chat.AddMessage("" + charge);
+            //force
 
 
             if (charge >= 1f)

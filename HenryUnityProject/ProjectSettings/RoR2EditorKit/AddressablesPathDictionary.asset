@@ -12,13 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c7dca0c3ef5c934fb4caac6d2d1a0da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fileDateTimeTicks: 639057154800000000
-  _serializedTypeResultCache:
-  - cacheKey:
-      requiredType:
-        assemblyQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      entriesIncludeComponentFoundInChildren: 0
-    cacheHit:
-      pathCache: []
-      guidsCache: []
+  _fileDateTimeTicks: 639082337420000000
+  _serializedTypeResultCache: []

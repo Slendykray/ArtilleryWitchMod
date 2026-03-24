@@ -9,7 +9,6 @@ namespace HenryMod.Survivors.Henry.Components
     {      
         private void Awake()
         {
-            Log.Message(transform.name);
             GetComponent<Animator>().runtimeAnimatorController = Addressables.LoadAssetAsync<RuntimeAnimatorController>("RoR2/Base/Mage/animMageDisplay.controller").WaitForCompletion();
         }
 

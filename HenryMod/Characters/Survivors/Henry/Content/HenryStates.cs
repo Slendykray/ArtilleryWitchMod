@@ -19,6 +19,9 @@ namespace HenryMod.Survivors.Henry
             Modules.Content.AddEntityState(typeof(ChargeNuke));
             Modules.Content.AddEntityState(typeof(ThrowNuke));
             Modules.Content.AddEntityState(typeof(Wait));
+            Modules.Content.AddEntityState(typeof(NapalmDash));
+            Modules.Content.AddEntityState(typeof(ThrowCluster));
+            Modules.Content.AddEntityState(typeof(Fist));
         }
     }
 }
