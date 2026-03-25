@@ -399,7 +399,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &4026983353565007136
+--- !u!1001 &6345776205416426633
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -464,11 +464,6 @@ PrefabInstance:
     - target: {fileID: 429952998613793016, guid: a32fb17ad7dfd7b4f8b893feaf7d7512,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1362301162367158301, guid: a32fb17ad7dfd7b4f8b893feaf7d7512,
-        type: 3}
-      propertyPath: componentsToDisableOnRagdoll.Array.size
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
