@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace HenryMod.Modules.Characters
+namespace ArtilleristMod.Modules.Characters
 {
     public abstract class CharacterBase<T> where T : CharacterBase<T>, new()
     {
