@@ -26,7 +26,7 @@ namespace ArtilleristMod.Survivors.Artillerist
         public const float nukeMaxRadius = 20f;
         public const float nukeWaitTime = 3f;
 
-        public const float fistDamageCoefficient = 12f; 
+        public const float fistDamageCoefficient = 4f; 
 
     }
 }

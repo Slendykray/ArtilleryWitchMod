@@ -1,92 +1,210 @@
-﻿using EntityStates.Loader;
+﻿using ArtilleristMod.Modules.BaseStates;
+using ArtilleristMod.Survivors.Artillerist;
+using EntityStates;
+using EntityStates.Loader;
 using EntityStates.Mage.Weapon;
 using RoR2;
+using RoR2.Projectile;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 
 namespace ArtilleristMod.Survivors.Artillerist.SkillStates
 {
-
-    public class Fist : GroundSlam
+    public class Fist : BaseTimedSkillState
     {
-		//private float upForce = 12f;
-		//private float forceDur = 0.25f;
-		public override void OnEnter()
+        private bool _heldTooLongYaDoofus;
+        private bool _inputDown;
+
+        public override float TimedBaseDuration => 2f;
+        public override float TimedBaseCastStartPercentTime => 0.5f;
+
+        private Transform slamIndicatorInstance;
+
+        private float attackRecoil = 3f;
+        private float punchForce = 3000f;
+        private float punchRadius = 20f;
+
+        public override void OnEnter()
         {
-            blastRadius = 20f;
-            //blastBonusForce = Vector3.zero;
-			//blastBonusForce *= 2f;
-			blastDamageCoefficient = ArtilleristStaticValues.fistDamageCoefficient;
-           //blastEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion();
+            base.OnEnter();
 
-			base.OnEnter();
-                 
-			base.PlayAnimation("Gesture, Additive", BaseChargeBombState.ChargeNovaBombStateHash, BaseChargeBombState.ChargeNovaBombParamHash, 1f);
+            //skillLocator.special.SetSkillOverride(base.characterBody, CharacterBody.CommonAssets.disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
-            //gameObject.AddComponent<IgnoreFallDamage>();
-            //DetonateAuthority(
-            if (NetworkServer.active)
+            base.PlayAnimation("Gesture, Additive", BaseChargeBombState.ChargeNovaBombStateHash, BaseChargeBombState.ChargeNovaBombParamHash, TimedBaseDuration * TimedBaseCastStartPercentTime);
+
+            if (isAuthority && base.inputBank.skill4.down)
             {
-                characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+                _heldTooLongYaDoofus = true;
+            }
+            else
+            {
+                _inputDown = true;
             }
         }
 
-
-
-  //      public override void FixedUpdate()
-		//{
-		//	base.FixedUpdate();
-		//	if (base.isAuthority && base.characterMotor)
-		//	{
-		//		base.characterMotor.moveDirection = base.inputBank.moveVector;
-		//		base.characterDirection.moveVector = base.characterMotor.moveDirection;
-		//		CharacterMotor characterMotor = base.characterMotor;
-		//		characterMotor.velocity.y = characterMotor.velocity.y + GroundSlam.verticalAcceleration * base.GetDeltaTime();
-		//		if (base.fixedAge >= GroundSlam.minimumDuration && (this.detonateNextFrame || base.characterMotor.Motor.GroundingStatus.IsStableOnGround))
-		//		{
-		//			BlastAttack.HitPoint[] points =  this.DetonateAuthority().hitPoints;
-
-		//			float stopwatch = 0f;
-		//			stopwatch += GetDeltaTime();
-
-		//			for (int i = 0; i < points.Length; i++)
-		//			{					
-		//				HealthComponent healthComponent = points[i].hurtBox.healthComponent;
-		//				if (healthComponent)
-		//				{
-		//					Vector3 force = Vector3.up * upForce;
-		//					CharacterMotor motor = healthComponent.body.characterMotor;
-		//					if (motor)
-		//					{
-		//						motor.rootMotion.y += upForce;
-		//					}
-
-
-
-		//				}
-		//			}
-		//			if (stopwatch >= forceDur)
-		//				this.outer.SetNextStateToMain();
-		//		}
-		//	}
-		//}
-
-	
-
-
-		public override void OnExit()
+        protected override void OnCastEnter()
         {
+            //if (isAuthority)
+            //{
+            //    AddRecoil(-1f * attackRecoil, -2f * attackRecoil, -0.5f * attackRecoil, 0.5f * attackRecoil);
+            //}
+            //Util.PlaySound("", gameObject);
 
-            //Destroy(gameObject.GetComponent<IgnoreFallDamage>());
-            if (NetworkServer.active)
+            EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion(), transform.position, Quaternion.identity, false);
+
+            base.PlayAnimation("Gesture, Additive", BaseThrowBombState.FireNovaBombStateHash, BaseThrowBombState.FireNovaBombParamHash, TimedBaseDuration * (1 - TimedBaseCastStartPercentTime));
+
+            if (!this.slamIndicatorInstance) this.CreateIndicator();
+
+            Fire();
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            if (_heldTooLongYaDoofus && isAuthority && base.inputBank.skill4.justReleased)
             {
-                characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
+                _heldTooLongYaDoofus = false;
+            }
+            if (!_heldTooLongYaDoofus && isAuthority && base.inputBank.skill4.justPressed)
+            {
+                _inputDown = true;
             }
 
-            base.PlayAnimation("Gesture, Additive", BaseThrowBombState.FireNovaBombStateHash, BaseThrowBombState.FireNovaBombParamHash, 1f);
+            if (isAuthority && inputBank.skill4.justReleased && _inputDown)
+            {
+                GetModelAnimator().Rebind();
 
-			base.OnExit();
+                base.skillLocator.special.UnsetSkillOverride(base.characterBody, CharacterBody.CommonAssets.disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
+
+                this.outer.SetNextStateToMain();
+            }
+
+
+        }
+        private void Fire()
+        {
+            List<HurtBox> HurtBoxes = new List<HurtBox>();
+            HurtBoxes = new SphereSearch
+            {
+                radius = punchRadius,
+                mask = LayerIndex.entityPrecise.mask,
+                origin = transform.position
+            }.RefreshCandidates().FilterCandidatesByHurtBoxTeam(TeamMask.GetEnemyTeams(base.teamComponent.teamIndex)).FilterCandidatesByDistinctHurtBoxEntities().GetHurtBoxes().ToList();
+
+            foreach (HurtBox hurtbox in HurtBoxes)
+            {
+                float _level = Mathf.Floor(base.characterBody.level / 4f);
+                //float bonus = HayMaker.hayMakerGritBonus + (_level * HayMaker.hayMakerGritBonusPer4);
+                Vector3 direction = (hurtbox.gameObject.transform.position - base.characterBody.corePosition).normalized;
+
+                DamageInfo damageInfo = new DamageInfo();
+                damageInfo.damage = this.damageStat * ArtilleristStaticValues.fistDamageCoefficient;
+                damageInfo.attacker = base.gameObject;
+                damageInfo.inflictor = base.gameObject;
+                //Vector3 force = Vector3.up * 5000f;
+                //damageInfo.force = Vector3.zero + direction * 3000f;
+                damageInfo.force = Vector3.zero;
+                damageInfo.crit = base.RollCrit();
+                damageInfo.procCoefficient = 1f;
+                damageInfo.position = hurtbox.gameObject.transform.position;
+                damageInfo.damageType = DamageType.Stun1s;
+                //DamageAPI.AddModdedDamageType(damageInfo, SettPlugin.settDamage);
+
+                hurtbox.healthComponent.TakeDamage(damageInfo);
+                GlobalEventManager.instance.OnHitEnemy(damageInfo, hurtbox.healthComponent.gameObject);
+                GlobalEventManager.instance.OnHitAll(damageInfo, hurtbox.healthComponent.gameObject);
+                //GameObject hitEffectPrefab = Modules.Assets.swordHitImpactEffect;
+                //if (hitEffectPrefab)
+                //{
+                //    EffectManager.SpawnEffect(hitEffectPrefab, new EffectData
+                //    {
+                //        origin = hurtbox.healthComponent.gameObject.transform.position,
+                //        rotation = Quaternion.identity,
+                //        networkSoundEventIndex = Modules.Assets.swordHitSoundEvent.index
+                //    }, true);
+                //}
+
+
+
+                HealthComponent healthComponent = hurtbox.healthComponent;
+                if (healthComponent)
+                {
+                    Vector3 force = Vector3.up * punchForce;
+               
+                    CharacterMotor motor = healthComponent.body.characterMotor;
+                    if (motor)
+                    {
+                        float massFactor = motor.mass / 100f;
+                        motor.ApplyForce(Vector3.zero + force * massFactor);
+                    }
+                }
+            }
+        }
+
+       
+        private void UpdateSlamIndicator()
+        {
+            if (this.slamIndicatorInstance)
+            {
+                float maxDistance = 250f;
+
+                this.downRay = new Ray
+                {
+                    direction = Vector3.down,
+                    origin = base.transform.position
+                };
+
+                RaycastHit raycastHit;
+                if (Physics.Raycast(this.downRay, out raycastHit, maxDistance, LayerIndex.world.mask))
+                {
+                    this.slamIndicatorInstance.transform.position = raycastHit.point;
+                    this.slamIndicatorInstance.transform.up = raycastHit.normal;
+                }
+            }
+        }
+        private Ray downRay;
+
+        private void CreateIndicator()
+        {
+            if (EntityStates.Huntress.ArrowRain.areaIndicatorPrefab)
+            {
+                this.downRay = new Ray
+                {
+                    direction = Vector3.down,
+                    origin = base.transform.position
+                };
+
+                this.slamIndicatorInstance = UnityEngine.Object.Instantiate<GameObject>(EntityStates.Huntress.ArrowRain.areaIndicatorPrefab).transform;
+                this.slamIndicatorInstance.localScale = Vector3.one * punchRadius;
+            }
+        }
+        public override void Update()
+        {
+            base.Update();
+
+            if (this.slamIndicatorInstance) this.UpdateSlamIndicator();
+        }
+
+        public override void OnExit()
+        {
+            if (this.slamIndicatorInstance) EntityState.Destroy(this.slamIndicatorInstance.gameObject);
+            base.OnExit();
+        }
+
+        protected override void SetNextState()
+        {     
+            outer.SetNextState(new Fist());
+        }
+
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.Frozen;
         }
     }
 

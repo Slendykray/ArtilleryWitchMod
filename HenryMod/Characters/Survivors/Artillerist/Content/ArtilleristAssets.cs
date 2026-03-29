@@ -1,10 +1,13 @@
 ﻿using ArtilleristMod.Modules;
 using ArtilleristMod.Survivors.Artillerist.Components;
+using EntityStates;
 using RoR2;
 using RoR2.Projectile;
+using RoR2.Skills;
 using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+
 
 namespace ArtilleristMod.Survivors.Artillerist
 {
@@ -32,6 +35,8 @@ namespace ArtilleristMod.Survivors.Artillerist
         public static GameObject cluster;
         public static GameObject napalm;
 
+      
+
         public static void Init(AssetBundle assetBundle)
         {
 
@@ -43,6 +48,7 @@ namespace ArtilleristMod.Survivors.Artillerist
 
             CreateProjectiles();
         }
+
 
         #region effects
         private static void CreateEffects()

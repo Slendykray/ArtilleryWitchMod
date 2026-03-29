@@ -79,7 +79,7 @@ namespace ArtilleristMod.Survivors.Artillerist
             Language.Add(prefix + "SPECIAL_NUKE_DESCRIPTION", Tokens.stunningPrefix + $"Charge up a massive bomb for {Tokens.RangeDamageValueText(ArtilleristStaticValues.nukeMinDamageCoefficient, ArtilleristStaticValues.nukeMaxDamageCoefficient)}. At max charge will ignite a big area and {Tokens.RedText($"disable abilities for {ArtilleristStaticValues.nukeWaitTime}s")}.");
 
             Language.Add(prefix + "SPECIAL_FIST_NAME", "Fist");
-            Language.Add(prefix + "SPECIAL_FIST_DESCRIPTION", Tokens.stunningPrefix + $"Slam your fist into the ground to explode for {Tokens.DamageValueText(ArtilleristStaticValues.fistDamageCoefficient)}.");
+            Language.Add(prefix + "SPECIAL_FIST_DESCRIPTION", Tokens.stunningPrefix + $"Plant a hand into the ground and continuously erupt the area around tossing enemies up into the air for {Tokens.DamageValueText(ArtilleristStaticValues.fistDamageCoefficient)}.");
             #endregion
 
             #region Achievements

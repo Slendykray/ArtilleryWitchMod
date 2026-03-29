@@ -67,9 +67,14 @@ namespace ArtilleristMod.Modules.BaseStates
 
             if (fixedAge > duration)
             {
-                outer.SetNextStateToMain();
+                SetNextState();
                 return;
             }
+        }
+
+        protected virtual void SetNextState()
+        {
+            outer.SetNextStateToMain();
         }
 
         public override void Update()
