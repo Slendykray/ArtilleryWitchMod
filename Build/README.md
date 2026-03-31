@@ -5,7 +5,7 @@ Thanks fontainesinclair for commissioning!
 beta release cuz missing icons, animations, etc
 
 # Skills
-[![](https://github.com/Slendykray/ArtilleryWitchMod/blob/master/Images/skills.png?raw=true)](https://github.com/Slendykray/ArtilleryWitchMod/blob/master/Images/skills.png?raw=true)
+[![](https://github.com/Slendykray/ArtilleryWitchMod/blob/main/Images/skills.png?raw=true)](https://github.com/Slendykray/ArtilleryWitchMod/blob/main/Images/skills.png?raw=true)
 
 # Credits
 - Slendykray - coding/unity stuff
