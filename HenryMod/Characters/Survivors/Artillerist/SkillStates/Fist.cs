@@ -23,17 +23,17 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
 
         private Transform slamIndicatorInstance;
 
-        private float attackRecoil = 3f;
-        private float punchForce = 3000f;
-        private float punchRadius = 20f;
+        private float slamForce = 3000f;
+        private float slamRadius = 25f;
 
         public override void OnEnter()
         {
             base.OnEnter();
 
-            //skillLocator.special.SetSkillOverride(base.characterBody, CharacterBody.CommonAssets.disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
-
-            base.PlayAnimation("Gesture, Additive", BaseChargeBombState.ChargeNovaBombStateHash, BaseChargeBombState.ChargeNovaBombParamHash, TimedBaseDuration * TimedBaseCastStartPercentTime);
+            skillLocator.special.SetSkillOverride(base.characterBody, CharacterBody.CommonAssets.disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
+            float dur = TimedBaseDuration * TimedBaseCastStartPercentTime;
+            //base.PlayAnimation("Gesture, Additive", BaseChargeBombState.ChargeNovaBombStateHash, BaseChargeBombState.ChargeNovaBombParamHash, dur);
+            base.PlayAnimation("Gesture, Additive", PrepWall.PrepWallStateHash, PrepWall.PrepWallParamHash, dur);
 
             if (isAuthority && base.inputBank.skill4.down)
             {
@@ -55,7 +55,12 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
 
             EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion(), transform.position, Quaternion.identity, false);
 
-            base.PlayAnimation("Gesture, Additive", BaseThrowBombState.FireNovaBombStateHash, BaseThrowBombState.FireNovaBombParamHash, TimedBaseDuration * (1 - TimedBaseCastStartPercentTime));
+            float dur = TimedBaseDuration * (1 - TimedBaseCastStartPercentTime);
+
+
+            //base.PlayAnimation("Gesture, Additive", BaseThrowBombState.FireNovaBombStateHash, BaseThrowBombState.FireNovaBombParamHash, dur);
+
+            this.PlayAnimation("Gesture, Additive", PrepWall.FireWallStateHash);
 
             if (!this.slamIndicatorInstance) this.CreateIndicator();
 
@@ -91,24 +96,39 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
             List<HurtBox> HurtBoxes = new List<HurtBox>();
             HurtBoxes = new SphereSearch
             {
-                radius = punchRadius,
+                radius = slamRadius,
                 mask = LayerIndex.entityPrecise.mask,
                 origin = transform.position
             }.RefreshCandidates().FilterCandidatesByHurtBoxTeam(TeamMask.GetEnemyTeams(base.teamComponent.teamIndex)).FilterCandidatesByDistinctHurtBoxEntities().GetHurtBoxes().ToList();
 
             foreach (HurtBox hurtbox in HurtBoxes)
             {
-                float _level = Mathf.Floor(base.characterBody.level / 4f);
+                //float _level = Mathf.Floor(base.characterBody.level / 4f);
                 //float bonus = HayMaker.hayMakerGritBonus + (_level * HayMaker.hayMakerGritBonusPer4);
-                Vector3 direction = (hurtbox.gameObject.transform.position - base.characterBody.corePosition).normalized;
+                //Vector3 direction = (hurtbox.gameObject.transform.position - base.characterBody.corePosition).normalized;
+
+
+                Vector3 force = Vector3.zero;
+
+                HealthComponent healthComponent = hurtbox.healthComponent;
+                if (healthComponent)
+                {
+                    Vector3 dir = Vector3.up * slamForce;
+
+                    CharacterMotor motor = healthComponent.body.characterMotor;
+                    if (motor)
+                    {
+                        float massFactor = motor.mass / 100f;
+                        force = Vector3.zero + dir * massFactor;
+                        //motor.ApplyForce(Vector3.zero + dir * massFactor);
+                    }
+                }
 
                 DamageInfo damageInfo = new DamageInfo();
                 damageInfo.damage = this.damageStat * ArtilleristStaticValues.fistDamageCoefficient;
                 damageInfo.attacker = base.gameObject;
                 damageInfo.inflictor = base.gameObject;
-                //Vector3 force = Vector3.up * 5000f;
-                //damageInfo.force = Vector3.zero + direction * 3000f;
-                damageInfo.force = Vector3.zero;
+                damageInfo.force = force;
                 damageInfo.crit = base.RollCrit();
                 damageInfo.procCoefficient = 1f;
                 damageInfo.position = hurtbox.gameObject.transform.position;
@@ -131,18 +151,7 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
 
 
 
-                HealthComponent healthComponent = hurtbox.healthComponent;
-                if (healthComponent)
-                {
-                    Vector3 force = Vector3.up * punchForce;
                
-                    CharacterMotor motor = healthComponent.body.characterMotor;
-                    if (motor)
-                    {
-                        float massFactor = motor.mass / 100f;
-                        motor.ApplyForce(Vector3.zero + force * massFactor);
-                    }
-                }
             }
         }
 
@@ -180,7 +189,7 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
                 };
 
                 this.slamIndicatorInstance = UnityEngine.Object.Instantiate<GameObject>(EntityStates.Huntress.ArrowRain.areaIndicatorPrefab).transform;
-                this.slamIndicatorInstance.localScale = Vector3.one * punchRadius;
+                this.slamIndicatorInstance.localScale = Vector3.one * slamRadius;
             }
         }
         public override void Update()
