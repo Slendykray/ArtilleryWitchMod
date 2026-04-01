@@ -115,6 +115,8 @@ namespace ArtilleristMod.Survivors.Artillerist
         private void AdditionalBodySetup()
         {
             AddHitboxes();
+            //ItemDisplayRuleSet itemDisplayRule = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Mage/MageBody.prefab").WaitForCompletion().GetComponent<ModelLocator>().modelTransform.GetComponent<CharacterModel>().itemDisplayRuleSet;
+            //bodyPrefab.GetComponent<ModelLocator>().modelTransform.GetComponent<CharacterModel>().itemDisplayRuleSet = itemDisplayRule;
             //bodyPrefab.AddComponent<HenryWeaponComponent>();
             //bodyPrefab.AddComponent<AnimReplace>();
             //displayPrefab.AddComponent<AnimReplaceDisplay>(); 
@@ -248,10 +250,10 @@ namespace ArtilleristMod.Survivors.Artillerist
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 2f,
+                baseRechargeInterval = 1f,
                 baseMaxStock = 3,
 
-                rechargeStock = 3,
+                rechargeStock = 1,
                 requiredStock = 1,
                 stockToConsume = 1,
 
@@ -422,7 +424,6 @@ namespace ArtilleristMod.Survivors.Artillerist
             Skills.AddSkillToFamily(utilitySkillFamily, utilitySkillDef2, ArtilleristUnlockables.fistUnlockableDef);
         }
 
-        public static SkillDef FistCancel;
         private void AddSpecialSkills()
         {
             Skills.CreateGenericSkillWithSkillFamily(bodyPrefab, SkillSlot.Special);
@@ -440,7 +441,7 @@ namespace ArtilleristMod.Survivors.Artillerist
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.ChargeNuke)),
                 //setting this to the "weapon2" EntityStateMachine allows us to cast this skill at the same time primary, which is set to the "weapon" EntityStateMachine
                 activationStateMachineName = "Weapon", 
-                interruptPriority = EntityStates.InterruptPriority.Skill,
+                interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
                 baseRechargeInterval = 15f,
                 baseMaxStock = 1,
@@ -475,8 +476,8 @@ namespace ArtilleristMod.Survivors.Artillerist
                 //activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Mage.Weapon.ChargeIcebomb)),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Fist)),
                 //setting this to the "weapon2" EntityStateMachine allows us to cast this skill at the same time primary, which is set to the "weapon" EntityStateMachine
-                activationStateMachineName = "Body",
-                interruptPriority = EntityStates.InterruptPriority.Skill,
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
                 baseRechargeInterval = 10f,
                 baseMaxStock = 1,
@@ -489,7 +490,7 @@ namespace ArtilleristMod.Survivors.Artillerist
                 fullRestockOnAssign = true,
                 dontAllowPastMaxStocks = false,
                 mustKeyPress = true,
-                beginSkillCooldownOnSkillEnd = true,
+                beginSkillCooldownOnSkillEnd = false,
 
                 isCombatSkill = true,
                 canceledFromSprinting = false,
@@ -497,29 +498,7 @@ namespace ArtilleristMod.Survivors.Artillerist
                 forceSprintDuringState = false,
             });
 
-            Skills.AddSpecialSkills(bodyPrefab, specialSkillDef2);
-
-
-            FistCancel = ScriptableObject.CreateInstance<SkillDef>();
-
-            FistCancel.activationState = new SerializableEntityStateType(typeof(SkillStates.Fist));
-            FistCancel.activationStateMachineName = "Body";
-            FistCancel.baseMaxStock = 1;
-            FistCancel.baseRechargeInterval = 0f;
-            FistCancel.beginSkillCooldownOnSkillEnd = true;
-            FistCancel.canceledFromSprinting = false;
-            FistCancel.cancelSprintingOnActivation = true;
-            FistCancel.fullRestockOnAssign = true;
-            FistCancel.interruptPriority = InterruptPriority.Frozen;
-            FistCancel.isCombatSkill = false;
-            FistCancel.mustKeyPress = true;
-            FistCancel.rechargeStock = 1;
-            FistCancel.requiredStock = 1;
-            FistCancel.stockToConsume = 1;
-            FistCancel.icon = null;
-            FistCancel.skillDescriptionToken = "SPECIAL_CANCEL_DESCRIPTION";
-            FistCancel.skillName = "SPECIAL_CANCEL_NAME";
-            FistCancel.skillNameToken = "SPECIAL_CANCEL_NAME";
+            Skills.AddSpecialSkills(bodyPrefab, specialSkillDef2);     
         }
         #endregion skills
         

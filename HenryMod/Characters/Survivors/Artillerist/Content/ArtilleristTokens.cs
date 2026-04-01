@@ -62,12 +62,12 @@ namespace ArtilleristMod.Survivors.Artillerist
             Language.Add(prefix + "SECONDARY_GAS_NAME", "Gas grenade");
             Language.Add(prefix + "SECONDARY_GAS_DESCRIPTION", Tokens.poisonousPrefix + $"Throw a gas bomb. Can be ignited with Missile for {Tokens.DamageValueText(ArtilleristStaticValues.gasExplosionDamageCoefficient)}.");
 
-            Language.Add(prefix + "SECONDARY_CLUSTER_NAME", "Cluster grenade");
+            Language.Add(prefix + "SECONDARY_CLUSTER_NAME", "Cluster bomb");
             Language.Add(prefix + "SECONDARY_CLUSTER_DESCRIPTION", Tokens.stunningPrefix + $"Throw a cluster bomb for {Tokens.MultDamageValueText(ArtilleristStaticValues.clusterBomblets + 1, ArtilleristStaticValues.clusterDamageCoefficient)}.");
             #endregion
 
             #region Utility
-            Language.Add(prefix + "UTILITY_DASH_NAME", "Dash");
+            Language.Add(prefix + "UTILITY_DASH_NAME", "Explosive blink");
             Language.Add(prefix + "UTILITY_DASH_DESCRIPTION", Tokens.stunningPrefix + $"Dash forward through enemies and damage them for {Tokens.DamageValueText(ArtilleristStaticValues.dashDamageCoefficient)}");
 
             Language.Add(prefix + "UTILITY_FIREDASH_NAME", "Fire Dash");
@@ -78,8 +78,8 @@ namespace ArtilleristMod.Survivors.Artillerist
             Language.Add(prefix + "SPECIAL_NUKE_NAME", "Nuke");
             Language.Add(prefix + "SPECIAL_NUKE_DESCRIPTION", Tokens.stunningPrefix + $"Charge up a massive bomb for {Tokens.RangeDamageValueText(ArtilleristStaticValues.nukeMinDamageCoefficient, ArtilleristStaticValues.nukeMaxDamageCoefficient)}. At max charge will ignite a big area and {Tokens.RedText($"disable abilities for {ArtilleristStaticValues.nukeWaitTime}s")}.");
 
-            Language.Add(prefix + "SPECIAL_FIST_NAME", "Fist");
-            Language.Add(prefix + "SPECIAL_FIST_DESCRIPTION", Tokens.stunningPrefix + $"Plant a hand into the ground and continuously erupt the area around tossing enemies up into the air for {Tokens.DamageValueText(ArtilleristStaticValues.fistDamageCoefficient)}.");
+            Language.Add(prefix + "SPECIAL_FIST_NAME", "Crackle");
+            Language.Add(prefix + "SPECIAL_FIST_DESCRIPTION", Tokens.stunningPrefix + $"Erupt the area around tossing enemies up into the air for {Tokens.DamageValueText(ArtilleristStaticValues.fistDamageCoefficient)}.");
             #endregion
 
             #region Achievements

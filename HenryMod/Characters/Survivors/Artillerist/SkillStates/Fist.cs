@@ -19,7 +19,7 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
         private bool _inputDown;
 
         public override float TimedBaseDuration => 2f;
-        public override float TimedBaseCastStartPercentTime => 0.5f;
+        public override float TimedBaseCastStartPercentTime => 0.8f;
 
         private Transform slamIndicatorInstance;
 
@@ -30,7 +30,7 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
         {
             base.OnEnter();
 
-            skillLocator.special.SetSkillOverride(base.characterBody, CharacterBody.CommonAssets.disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
+            //skillLocator.special.SetSkillOverride(base.characterBody, CharacterBody.CommonAssets.disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
             float dur = TimedBaseDuration * TimedBaseCastStartPercentTime;
             //base.PlayAnimation("Gesture, Additive", BaseChargeBombState.ChargeNovaBombStateHash, BaseChargeBombState.ChargeNovaBombParamHash, dur);
             base.PlayAnimation("Gesture, Additive", PrepWall.PrepWallStateHash, PrepWall.PrepWallParamHash, dur);
@@ -80,14 +80,14 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
                 _inputDown = true;
             }
 
-            if (isAuthority && inputBank.skill4.justReleased && _inputDown)
-            {
-                GetModelAnimator().Rebind();
+            //if (isAuthority && inputBank.skill4.justReleased && _inputDown)
+            //{
+            //    GetModelAnimator().Rebind();
 
-                base.skillLocator.special.UnsetSkillOverride(base.characterBody, CharacterBody.CommonAssets.disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
+            //    base.skillLocator.special.UnsetSkillOverride(base.characterBody, CharacterBody.CommonAssets.disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
 
-                this.outer.SetNextStateToMain();
-            }
+            //    this.outer.SetNextStateToMain();
+            //}
 
 
         }
@@ -205,10 +205,10 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
             base.OnExit();
         }
 
-        protected override void SetNextState()
-        {     
-            outer.SetNextState(new Fist());
-        }
+        //protected override void SetNextState()
+        //{     
+        //    outer.SetNextState(new Fist());
+        //}
 
 
         public override InterruptPriority GetMinimumInterruptPriority()

@@ -35,7 +35,8 @@ namespace ArtilleristMod.Survivors.Artillerist
         public static GameObject cluster;
         public static GameObject napalm;
 
-      
+        public static GameObject dashExplosion;
+
 
         public static void Init(AssetBundle assetBundle)
         {
@@ -181,6 +182,12 @@ namespace ArtilleristMod.Survivors.Artillerist
             napalmExplosion.childrenProjectilePrefab = napalmDot;
             napalmExplosion.transformSpace = ProjectileImpactExplosion.TransformSpace.Normal;
             napalmExplosion.falloffModel = BlastAttack.FalloffModel.None;
+
+            //dash exp??
+            dashExplosion = R2API.PrefabAPI.InstantiateClone(fireEffect, "ArtilleristDashExplosion");
+            ProjectileImpactExplosion dashImpExplosion = dashExplosion.GetComponent<ProjectileImpactExplosion>();
+            dashImpExplosion.applyDot = false;
+
         }
         #endregion projectiles
     }
