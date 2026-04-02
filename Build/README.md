@@ -8,8 +8,6 @@ beta release, missing icons, animations, etc
 [![](https://github.com/Slendykray/ArtilleryWitchMod/blob/main/Images/skills.png?raw=true)](https://github.com/Slendykray/ArtilleryWitchMod/blob/main/Images/skills.png?raw=true)
 
 # Concept art
-[![](https://github.com/Slendykray/ArtilleryWitchMod/blob/main/Images/concept1.png?raw=true)](https://github.com/Slendykray/ArtilleryWitchMod/blob/main/Images/concept1.png?raw=true)
-
 [![](https://github.com/Slendykray/ArtilleryWitchMod/blob/main/Images/concept2.png?raw=true)](https://github.com/Slendykray/ArtilleryWitchMod/blob/main/Images/concept2.png?raw=true)
 
 # Credits
