@@ -66,6 +66,7 @@ namespace ArtilleristMod.Survivors.Artillerist
 
         public override UnlockableDef characterUnlockableDef => ArtilleristUnlockables.characterUnlockableDef;
         
+        //public override ItemDisplaysBase itemDisplays => new ArtilleristItemDisplays();
         public override ItemDisplaysBase itemDisplays => null;
 
         //set in base classes

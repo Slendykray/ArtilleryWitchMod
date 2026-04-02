@@ -135,8 +135,11 @@ namespace ArtilleristMod.Survivors.Artillerist
             ProjectileDamage damage = missileProjectilePrefab.GetComponent<ProjectileDamage>();
             damage.damageType = DamageType.Generic;
 
-
-
+            GameObject atg = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/MissileGhost.prefab").WaitForCompletion();
+            GameObject missileGhost = R2API.PrefabAPI.InstantiateClone(atg, "ArtilleristMissileGhost");
+            missileGhost.transform.localScale *= 3;
+            ProjectileController missileController = missileProjectilePrefab.GetComponent<ProjectileController>();
+            missileController.ghostPrefab = missileGhost;
 
             //nuke
             chargeNuke = _assetBundle.LoadAsset<GameObject>("ChargeNuke");

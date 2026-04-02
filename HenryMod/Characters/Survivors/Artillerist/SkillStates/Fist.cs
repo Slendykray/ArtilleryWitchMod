@@ -160,22 +160,23 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
         {
             if (this.slamIndicatorInstance)
             {
-                float maxDistance = 250f;
+                this.slamIndicatorInstance.transform.position = transform.position;
+                //float maxDistance = 250f;
 
-                this.downRay = new Ray
-                {
-                    direction = Vector3.down,
-                    origin = base.transform.position
-                };
+                //this.downRay = new Ray
+                //{
+                //    direction = Vector3.down,
+                //    origin = base.transform.position
+                //};
 
-                RaycastHit raycastHit;
-                if (Physics.Raycast(this.downRay, out raycastHit, maxDistance, LayerIndex.world.mask))
-                {
-                    this.slamIndicatorInstance.transform.position = raycastHit.point;
-                    this.slamIndicatorInstance.transform.up = raycastHit.normal;
-                }
+                //RaycastHit raycastHit;
+                //if (Physics.Raycast(this.downRay, out raycastHit, maxDistance, LayerIndex.world.mask))
+                //{
+                //    this.slamIndicatorInstance.transform.position = raycastHit.point;
+                //    this.slamIndicatorInstance.transform.up = raycastHit.normal;
+                //}
             }
-        }
+        } 
         private Ray downRay;
 
         private void CreateIndicator()
@@ -190,13 +191,14 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
 
                 this.slamIndicatorInstance = UnityEngine.Object.Instantiate<GameObject>(EntityStates.Huntress.ArrowRain.areaIndicatorPrefab).transform;
                 this.slamIndicatorInstance.localScale = Vector3.one * slamRadius;
+                this.slamIndicatorInstance.transform.position = transform.position;
             }
         }
         public override void Update()
         {
             base.Update();
 
-            if (this.slamIndicatorInstance) this.UpdateSlamIndicator();
+            //if (this.slamIndicatorInstance) this.UpdateSlamIndicator();
         }
 
         public override void OnExit()
