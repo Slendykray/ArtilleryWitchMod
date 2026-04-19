@@ -56,6 +56,7 @@ namespace ArtilleristMod.Modules.Characters
         }
 
         public virtual void InitializeItemDisplays() {
+            //uncomment for custom displays
             //ItemDisplayRuleSet itemDisplayRuleSet = ScriptableObject.CreateInstance<ItemDisplayRuleSet>();
             ItemDisplayRuleSet itemDisplayRuleSet = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Mage/MageBody.prefab").WaitForCompletion().GetComponent<ModelLocator>().modelTransform.GetComponent<CharacterModel>().itemDisplayRuleSet;
             itemDisplayRuleSet.name = "idrs" + bodyName;

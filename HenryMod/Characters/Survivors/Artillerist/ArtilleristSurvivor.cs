@@ -66,6 +66,7 @@ namespace ArtilleristMod.Survivors.Artillerist
 
         public override UnlockableDef characterUnlockableDef => ArtilleristUnlockables.characterUnlockableDef;
         
+        //uncomment for custom displays
         //public override ItemDisplaysBase itemDisplays => new ArtilleristItemDisplays();
         public override ItemDisplaysBase itemDisplays => null;
 
@@ -78,7 +79,7 @@ namespace ArtilleristMod.Survivors.Artillerist
         public override CharacterModel prefabCharacterModel { get; protected set; }
         public override GameObject displayPrefab { get; protected set; }
 
-        public override void Initialize()
+        public override void Initialize() 
         {
             //uncomment if you have multiple characters
             //ConfigEntry<bool> characterEnabled = Config.CharacterEnableConfig("Survivors", "Henry");
