@@ -32,7 +32,7 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
             targetMuzzle = "muzzleThrow";
             
             attackSoundString = "Play_mage_m1_shoot";
-
+            
             baseDuration = BaseDuration;
             baseDelayBeforeFiringProjectile = BaseDelayDuration;
 
