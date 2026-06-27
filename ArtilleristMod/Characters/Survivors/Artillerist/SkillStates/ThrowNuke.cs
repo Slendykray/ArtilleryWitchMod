@@ -17,32 +17,12 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
         public override void OnEnter()
         {
             projectilePrefab = ArtilleristAssets.nuke;
-            ProjectileImpactExplosion nukeImpactExplosion = projectilePrefab.GetComponent<ProjectileImpactExplosion>();
-            float num = ArtilleristStaticValues.nukeMaxRadius * charge;
-            nukeImpactExplosion.blastRadius = num;
-
-            //Chat.AddMessage("" + charge);
-            //force
-
-
-            if (charge >= 1f)
-            {           
-                nukeImpactExplosion.childrenProjectilePrefab = ArtilleristAssets.fireDot;
-                nukeImpactExplosion.fireChildren = true;
-            }
-            else
-            {
-                nukeImpactExplosion.childrenProjectilePrefab = null;
-                nukeImpactExplosion.fireChildren = false;
-            }
                 
             minDamageCoefficient = ArtilleristStaticValues.nukeMinDamageCoefficient;
             maxDamageCoefficient = ArtilleristStaticValues.nukeMaxDamageCoefficient;
             //projectilePrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Mage/MageIceBombProjectile.prefab").WaitForCompletion();
             baseDuration = 0.4f;
-
-         
-
+   
             base.OnEnter();
 
             Util.PlaySound("Play_mage_m2_iceSpear_shoot", gameObject);

@@ -1,3 +1,12 @@
+## 1.2.1
+
+- Fixed ragdoll in multiplayer
+
+## 1.2.0
+
+- Fixed for multiplayer
+- Tweaked alt special a bit
+
 ## 1.1.0
 
 - Changed missile/nuke models

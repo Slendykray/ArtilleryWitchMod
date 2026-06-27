@@ -13,17 +13,17 @@ using UnityEngine.Networking;
 
 namespace ArtilleristMod.Survivors.Artillerist.SkillStates
 {
-    public class Fist : BaseTimedSkillState
+    public class Crackle : BaseTimedSkillState
     {
         private bool _heldTooLongYaDoofus;
         private bool _inputDown;
 
-        public override float TimedBaseDuration => 2f;
-        public override float TimedBaseCastStartPercentTime => 0.8f;
+        public override float TimedBaseDuration => 0.1f;
+        public override float TimedBaseCastStartPercentTime => 0f;
 
         private Transform slamIndicatorInstance;
 
-        private float slamForce = 3000f;
+        private float slamForce = 5000f;
         private float slamRadius = 25f;
 
         public override void OnEnter()
@@ -33,7 +33,9 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
             //skillLocator.special.SetSkillOverride(base.characterBody, CharacterBody.CommonAssets.disabledSkill, GenericSkill.SkillOverridePriority.Contextual);
             float dur = TimedBaseDuration * TimedBaseCastStartPercentTime;
             //base.PlayAnimation("Gesture, Additive", BaseChargeBombState.ChargeNovaBombStateHash, BaseChargeBombState.ChargeNovaBombParamHash, dur);
-            base.PlayAnimation("Gesture, Additive", PrepWall.PrepWallStateHash, PrepWall.PrepWallParamHash, dur);
+
+            //
+            //base.PlayAnimation("Gesture, Additive", PrepWall.PrepWallStateHash, PrepWall.PrepWallParamHash, dur);
 
             if (isAuthority && base.inputBank.skill4.down)
             {
@@ -203,7 +205,8 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
 
         public override void OnExit()
         {
-            if (this.slamIndicatorInstance) EntityState.Destroy(this.slamIndicatorInstance.gameObject);
+            //if (this.slamIndicatorInstance) EntityState.Destroy(this.slamIndicatorInstance.gameObject, 0.5f);
+            if (this.slamIndicatorInstance) UnityEngine.Object.Destroy(this.slamIndicatorInstance.gameObject, 0.5f);
             base.OnExit();
         }
 

@@ -1,6 +1,7 @@
 ﻿using ArtilleristMod.Modules;
 using ArtilleristMod.Survivors.Artillerist.Components;
 using EntityStates;
+using R2API;
 using RoR2;
 using RoR2.Projectile;
 using RoR2.Skills;
@@ -27,16 +28,16 @@ namespace ArtilleristMod.Survivors.Artillerist
 
         private static AssetBundle _assetBundle;
 
-        public static GameObject fireEffect;
-        public static GameObject missileProjectilePrefab;
         public static GameObject chargeNuke;
+
+        public static GameObject missileProjectilePrefab;
         public static GameObject nuke;
         public static GameObject fireDot;
         public static GameObject cluster;
         public static GameObject napalm;
-
         public static GameObject dashExplosion;
-
+        public static GameObject gasProjectilePrefab;
+        public static GameObject fireEffect;
 
         public static void Init(AssetBundle assetBundle)
         {
@@ -88,6 +89,19 @@ namespace ArtilleristMod.Survivors.Artillerist
         {
             CreateBombProjectile();
             Content.AddProjectilePrefab(bombProjectilePrefab);
+            Content.AddProjectilePrefab(fireEffect);
+            Content.AddProjectilePrefab(fireDot);
+            Content.AddProjectilePrefab(missileProjectilePrefab);
+          
+            Content.AddProjectilePrefab(cluster);
+            Content.AddProjectilePrefab(napalm);
+            Content.AddProjectilePrefab(dashExplosion);
+
+            Content.AddProjectilePrefab(gasProjectilePrefab);
+            PrefabAPI.RegisterNetworkPrefab(gasProjectilePrefab);
+
+            Content.AddProjectilePrefab(nuke);
+            PrefabAPI.RegisterNetworkPrefab(nuke);
         }
 
         private static void CreateBombProjectile()
@@ -102,19 +116,20 @@ namespace ArtilleristMod.Survivors.Artillerist
 
             bombImpactExplosion.fireChildren = true;  
             bombImpactExplosion.childrenCount = 1;
-            bombImpactExplosion.childrenProjectilePrefab = _assetBundle.LoadAsset<GameObject>("gas");
 
-            GameObject gas = _assetBundle.LoadAsset<GameObject>("gas");
+            gasProjectilePrefab = _assetBundle.LoadAsset<GameObject>("gas");
 
-            gas.AddComponent<ArtilleristWeaponComponent>();
+            gasProjectilePrefab.AddComponent<ArtilleristWeaponComponent>();
 
-            gas.GetComponent<ProjectileController>().flightSoundLoop = 
+            gasProjectilePrefab.GetComponent<ProjectileController>().flightSoundLoop = 
                 Addressables.LoadAssetAsync<GameObject>("RoR2/Base/MiniMushroom/SporeGrenadeProjectileDotZone.prefab").WaitForCompletion().GetComponent<ProjectileController>().flightSoundLoop;
 
-            gas.transform.Find("Smoke").GetComponent<ParticleSystem>().GetComponent<ParticleSystemRenderer>().material =
+            gasProjectilePrefab.transform.Find("Smoke").GetComponent<ParticleSystem>().GetComponent<ParticleSystemRenderer>().material =
                 Addressables.LoadAssetAsync<Material>("RoR2/Base/MiniMushroom/matSporeGrenadeGasCloud.mat").WaitForCompletion();
 
-      
+            bombImpactExplosion.childrenProjectilePrefab = gasProjectilePrefab;
+
+
             fireEffect = Asset.CloneProjectilePrefab("CommandoGrenadeProjectile", "ArtilleristGasExplosion");
             ProjectileImpactExplosion fireExplosion = fireEffect.GetComponent<ProjectileImpactExplosion>();
             fireExplosion.lifetime = 0f; 
@@ -145,6 +160,7 @@ namespace ArtilleristMod.Survivors.Artillerist
             chargeNuke = _assetBundle.LoadAsset<GameObject>("ChargeNuke");
             
             nuke = _assetBundle.LoadAsset<GameObject>("Nuke");
+            nuke.AddComponent<NukeDynamicScaler>();
 
             ProjectileImpactExplosion nukeImpactExplosion = nuke.GetComponent<ProjectileImpactExplosion>();
             nukeImpactExplosion.explosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion(); 

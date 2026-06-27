@@ -289,7 +289,7 @@ namespace ArtilleristMod.Survivors.Artillerist
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
                 keywordTokens = new string[] { "KEYWORD_POISON" },
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.ThrowBomb)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.ThrowGas)),
                 activationStateMachineName = "Weapon2",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
@@ -476,7 +476,7 @@ namespace ArtilleristMod.Survivors.Artillerist
                 keywordTokens = new string[] { "KEYWORD_STUNNING" },
 
                 //activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Mage.Weapon.ChargeIcebomb)),
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Fist)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Crackle)),
                 //setting this to the "weapon2" EntityStateMachine allows us to cast this skill at the same time primary, which is set to the "weapon" EntityStateMachine
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
@@ -496,7 +496,7 @@ namespace ArtilleristMod.Survivors.Artillerist
 
                 isCombatSkill = true,
                 canceledFromSprinting = false,
-                cancelSprintingOnActivation = true,
+                cancelSprintingOnActivation = false,
                 forceSprintDuringState = false,
             });
 

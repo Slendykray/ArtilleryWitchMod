@@ -7,7 +7,7 @@ using EntityStates.Mage.Weapon;
 
 namespace ArtilleristMod.Survivors.Artillerist.SkillStates
 {
-    public class ThrowBomb : GenericProjectileBaseState
+    public class ThrowGas : GenericProjectileBaseState
     {
         public static float BaseDuration = 0.65f;
         //delays for projectiles feel absolute ass so only do this if you know what you're doing, otherwise it's best to keep it at 0

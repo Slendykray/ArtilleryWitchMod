@@ -2,6 +2,8 @@
 
 Thanks fontainesinclair for commissioning!
 
+Multiplayer compatible!
+
 beta release, missing icons, animations, etc
 
 # Skills

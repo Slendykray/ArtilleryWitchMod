@@ -1,6 +1,7 @@
 ﻿using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace ArtilleristMod.Survivors.Artillerist.Components
 {
@@ -26,21 +27,24 @@ namespace ArtilleristMod.Survivors.Artillerist.Components
 
         public void FuckingExplode(GameObject attacker, Vector3 pos)
         {
+            if (!NetworkServer.active)
+                return;
+
             CharacterBody body = attacker.GetComponent<CharacterBody>();
 
             float num3 = ArtilleristStaticValues.gasExplosionDamageCoefficient;
             float baseDamage = body.damage * num3;
 
             RoR2.Projectile.ProjectileManager.instance.FireProjectile(
-                     ArtilleristAssets.fireEffect,
-                     pos,
-                     Quaternion.identity,
-                     attacker,
-                     baseDamage,
-                     0f,
-                     Util.CheckRoll(body.crit, body.master),
-                     damageType: DamageSource.Primary
-                     );
+                ArtilleristAssets.fireEffect,
+                pos,
+                Quaternion.identity,
+                attacker,
+                baseDamage,
+                0f,
+                Util.CheckRoll(body.crit, body.master),
+                damageType: DamageSource.Primary
+            );
 
             Destroy(gameObject);
         }

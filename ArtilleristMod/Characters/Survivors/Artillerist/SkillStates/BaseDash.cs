@@ -75,19 +75,23 @@ namespace ArtilleristMod.Survivors.Artillerist.SkillStates
 
         public override void OnExit()
         {
-            float num3 = damageCoefficient;
-            float baseDamage = characterBody.damage * num3;
+            if (isAuthority)
+            {
+                float num3 = damageCoefficient;
+                float baseDamage = characterBody.damage * num3;
 
-            RoR2.Projectile.ProjectileManager.instance.FireProjectile(
+                RoR2.Projectile.ProjectileManager.instance.FireProjectile(
                     prefab: ArtilleristAssets.dashExplosion,
-                    position: transform.position, 
+                    position: transform.position,
                     rotation: Quaternion.identity,
                     owner: gameObject,
                     damage: baseDamage,
                     force: 0f,
                     crit: base.RollCrit(),
                     damageType: DamageSource.Utility
-                    );
+                );
+            }
+          
 
              
             base.characterMotor.velocity *= 0.1f;
