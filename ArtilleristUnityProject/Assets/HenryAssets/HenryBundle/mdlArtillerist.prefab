@@ -921,6 +921,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.0068231532
       objectReference: {fileID: 0}
+    - target: {fileID: 2299989154189825306, guid: f6d3fd9641e67074aad602659cd8daa3,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2684301958082018621, guid: f6d3fd9641e67074aad602659cd8daa3,
         type: 3}
       propertyPath: m_Name

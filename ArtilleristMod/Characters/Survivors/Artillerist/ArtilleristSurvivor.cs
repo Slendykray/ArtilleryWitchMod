@@ -68,6 +68,8 @@ namespace ArtilleristMod.Survivors.Artillerist
         
         //uncomment for custom displays
         //public override ItemDisplaysBase itemDisplays => new ArtilleristItemDisplays();
+
+        //for copied displays go to CharacterBase
         public override ItemDisplaysBase itemDisplays => null;
 
         //set in base classes

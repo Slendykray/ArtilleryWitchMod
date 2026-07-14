@@ -1,3 +1,7 @@
+## 1.2.2
+
+- Fixed invisible ragdoll
+
 ## 1.2.1
 
 - Fixed ragdoll in multiplayer
