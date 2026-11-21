@@ -1,3 +1,7 @@
+## 1.2.3
+
+- Added survivor and skin icon
+
 ## 1.2.2
 
 - Fixed invisible ragdoll

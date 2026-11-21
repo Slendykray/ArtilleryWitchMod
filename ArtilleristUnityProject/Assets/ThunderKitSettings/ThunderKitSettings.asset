@@ -31,5 +31,5 @@ MonoBehaviour:
   SelectedManifest: {fileID: 0}
   QuickAccessPipelines: []
   QuickAccessManifests: []
-  ImportConfiguration: {fileID: 11400000, guid: ae98a441cb72dec4da34e54ae34353af,
+  ImportConfiguration: {fileID: 11400000, guid: 8470548314670884dbe5ce28133f17cc,
     type: 2}

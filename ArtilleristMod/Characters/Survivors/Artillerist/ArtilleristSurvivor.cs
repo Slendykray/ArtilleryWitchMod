@@ -39,8 +39,7 @@ namespace ArtilleristMod.Survivors.Artillerist
             bodyNameToken = HENRY_PREFIX + "NAME",
             subtitleNameToken = HENRY_PREFIX + "SUBTITLE",
 
-            //characterPortrait = assetBundle.LoadAsset<Texture>("texHenryIcon"),
-            characterPortrait = null,
+            characterPortrait = assetBundle.LoadAsset<Texture>("texArtilleristIcon"),
             bodyColor = new Color32(255, 196, 0, 255),
             sortPosition = 100,
 
@@ -519,7 +518,7 @@ namespace ArtilleristMod.Survivors.Artillerist
             #region DefaultSkin
             //this creates a SkinDef with all default fields
             SkinDef defaultSkin = Skins.CreateSkinDef("DEFAULT_SKIN",
-                assetBundle.LoadAsset<Sprite>("texMainSkin"),
+                assetBundle.LoadAsset<Sprite>("texSkinDefault"),
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 

@@ -12,4 +12,95 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a797bc9ab1d580e4089f16a5204d77ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectSettings: []
+  _projectSettings:
+  - _typeName: EntityStateMachineInspector
+    _editorTypeQualifiedName: RoR2.Editor.Inspectors.EntityStateMachineInspector,
+      RoR2.Editor.Scripts, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _editorTypeQualifiedHash: -186733506
+    _serializedSettings:
+    - _settingName: isInspectorEnabled
+      _settingID: 1392571204
+      _valueTypeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      _serializedValue: 0
+      _defaultSerializedValue: 
+    _settingType: 0
+    _settingProviderName: R2EKEditorProjectSettings
+  - _typeName: NetworkStateMachineInspector
+    _editorTypeQualifiedName: RoR2.Editor.Inspectors.NetworkStateMachineInspector,
+      RoR2.Editor.Scripts, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _editorTypeQualifiedHash: -1089431989
+    _serializedSettings:
+    - _settingName: isInspectorEnabled
+      _settingID: 1392571204
+      _valueTypeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      _serializedValue: 0
+      _defaultSerializedValue: 
+    _settingType: 0
+    _settingProviderName: R2EKEditorProjectSettings
+  - _typeName: KinematicCharacterMotorInspector
+    _editorTypeQualifiedName: RoR2.Editor.Inspectors.KinematicCharacterMotorInspector,
+      RoR2.Editor.Scripts, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _editorTypeQualifiedHash: -1537038818
+    _serializedSettings:
+    - _settingName: isInspectorEnabled
+      _settingID: 1392571204
+      _valueTypeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      _serializedValue: 0
+      _defaultSerializedValue: 
+    _settingType: 0
+    _settingProviderName: R2EKEditorProjectSettings
+  - _typeName: HurtBoxGroupInspector
+    _editorTypeQualifiedName: RoR2.Editor.Inspectors.HurtBoxGroupInspector, RoR2.Editor.Scripts,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _editorTypeQualifiedHash: 1671599390
+    _serializedSettings:
+    - _settingName: isInspectorEnabled
+      _settingID: 1392571204
+      _valueTypeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      _serializedValue: 0
+      _defaultSerializedValue: 
+    _settingType: 0
+    _settingProviderName: R2EKEditorProjectSettings
+  - _typeName: ChildLocatorInspector
+    _editorTypeQualifiedName: RoR2.Editor.Inspectors.ChildLocatorInspector, RoR2.Editor.Scripts,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _editorTypeQualifiedHash: -1504679359
+    _serializedSettings:
+    - _settingName: isInspectorEnabled
+      _settingID: 1392571204
+      _valueTypeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      _serializedValue: 0
+      _defaultSerializedValue: 
+    _settingType: 0
+    _settingProviderName: R2EKEditorProjectSettings
+  - _typeName: SkillFamilyInspector
+    _editorTypeQualifiedName: RoR2.Editor.Inspectors.SkillFamilyInspector, RoR2.Editor.Scripts,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _editorTypeQualifiedHash: -1572011406
+    _serializedSettings:
+    - _settingName: isInspectorEnabled
+      _settingID: 1392571204
+      _valueTypeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      _serializedValue: 0
+      _defaultSerializedValue: 
+    _settingType: 0
+    _settingProviderName: R2EKEditorProjectSettings
+  - _typeName: ItemDisplayRuleSetInspector
+    _editorTypeQualifiedName: RoR2.Editor.Inspectors.ItemDisplayRuleSetInspector,
+      RoR2.Editor.Scripts, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _editorTypeQualifiedHash: 152983952
+    _serializedSettings:
+    - _settingName: isInspectorEnabled
+      _settingID: 1392571204
+      _valueTypeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      _serializedValue: 0
+      _defaultSerializedValue: 
+    _settingType: 0
+    _settingProviderName: R2EKEditorProjectSettings

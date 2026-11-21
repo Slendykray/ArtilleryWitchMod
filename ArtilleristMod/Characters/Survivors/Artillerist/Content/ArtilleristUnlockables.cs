@@ -19,12 +19,12 @@ namespace ArtilleristMod.Survivors.Artillerist
             characterUnlockableDef = Modules.Content.CreateAndAddUnlockbleDef(
                 ArtilleristUnlockAchievement.unlockableIdentifier,
                 Modules.Tokens.GetAchievementNameToken(ArtilleristUnlockAchievement.identifier),
-                null);
+                ArtilleristSurvivor.instance.assetBundle.LoadAsset<Sprite>("texUnlockAchievement"));
 
             masterySkinUnlockableDef = Modules.Content.CreateAndAddUnlockbleDef(
                 ArtilleristMasteryAchievement.unlockableIdentifier,
                 Modules.Tokens.GetAchievementNameToken(ArtilleristMasteryAchievement.identifier),
-                ArtilleristSurvivor.instance.assetBundle.LoadAsset<Sprite>("texMasteryAchievement"));
+                ArtilleristSurvivor.instance.assetBundle.LoadAsset<Sprite>("texUnlockAchievement"));
 
             clusterUnlockableDef = Modules.Content.CreateAndAddUnlockbleDef(
                ClusterAchievement.unlockableIdentifier,

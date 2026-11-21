@@ -33,17 +33,6 @@ namespace ArtilleristMod.Survivors.Artillerist.Achievements
             base.OnBodyRequirementBroken();
         }
 
-        public override void TryToCompleteActivity()
-        {
-            if (base.localUser.id == LocalUserManager.GetFirstLocalUser().id && this.shouldGrant)
-            {
-                BaseActivitySelector baseActivitySelector = new BaseActivitySelector();
-                baseActivitySelector.activityAchievementID = identifier;
-                PlatformSystems.activityManager.TryToCompleteActivity(baseActivitySelector, true, true);
-            }
-        }
-
-
         private class FistServerAchievement : BaseServerAchievement
         {
             public override void OnInstall()
